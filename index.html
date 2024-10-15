@@ -1,491 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" defer>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+        <script type="module" defer>
         const printButton = document.querySelector("#print");
 
         printButton.addEventListener("click", () => {
             window.print();
         });
-    </script>
-    <style>
-        /* Palette */
-        :root {
-            --main-bg-color: #6e28d9;
-            --success-color: #219F22;
-            --warn-color: #E2C91D;
-            --light-text: #f5f5f5;
-            --light-bg: #f5f5f5;
-        }
+        </script>
+    <link href="/assets/styles.css" rel="stylesheet"></link>
+    </head>
 
-        /* Utility classes */
-        body,
-        html {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            background: var(--main-bg-color);
-        }
+    <body>
+        <div id="move"></div>
+        <div id="main" class="global-container">
+            <div id="resume-container" class="resume-container cool-shadow">
+                <h1 class="page-title">CV NIKITA RYCHAGOV FULL-STACK WEB
+                    DEVELOPER</h1>
 
-        .column {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .section {
-            padding: 1rem 0;
-        }
-
-        .unstyled-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        /* Element styling classes */
-        .cool-shadow:hover {
-            box-shadow: 0.5rem 0.5rem 0rem black;
-            transition: 350ms;
-        }
-
-        .success {
-            border-color: var(--success-color);
-            color: var(--success-color)
-        }
-
-        .warn {
-            border-color: var(--warn-color);
-            color: var(--warn-color)
-        }
-
-        .chip-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .chip {
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 2rem;
-            border: 2px solid black;
-        }
-
-        .chip:hover {
-            background: var(--main-bg-color);
-            color: var(--light-text);
-            transition: 50ms;
-        }
-
-        /* Main classes */
-
-        .page-title {
-            visibility: hidden;
-            position: absolute;
-            width: inherit
-        }
-
-        .global-container {
-            padding: 1rem 0;
-        }
-
-        .resume-container {
-            margin: 0 auto;
-            padding: 2rem;
-            border-radius: 8px;
-            border: 2px solid black;
-            background: var(--light-bg);
-            width: 7in;
-            min-height: 9.5in;
-        }
-
-        .page {
-            font-size: 14px;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
-
-        .title-section {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .summary-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem 2rem;
-        }
-
-        .summary-text p {
-            margin: 1rem 0;
-        }
-
-        .title {
-            justify-content: space-between;
-        }
-
-        .name {
-            font-size: 64px;
-        }
-
-        .occupation {
-            font-size: 32px;
-        }
-
-        .content {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background-color: var(--light-bg);
-            gap: 0.2rem 0;
-        }
-
-        .skills-section {
-            margin-bottom: 1rem;
-        }
-
-        .workplace {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .workplace-list {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            gap: 2rem;
-        }
-
-        .workplace-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-        }
-
-        .workplace-header-content {
-            display: flex;
-            flex-direction: column;
-            min-width: 50%;
-        }
-
-        .workplace-title {
-            font-size: 24px;
-        }
-
-        .workplace-company {
-            font-weight: bold;
-        }
-
-        .workplace-address {
-            font-style: italic;
-        }
-
-        .workplace-description {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        /* Print block */
-        .print-action-block {
-            position: fixed;
-            right: 2rem;
-            top: 2rem;
-        }
-
-        .print-btn {
-            border-radius: 8px;
-            background: #f5f5f5;
-            padding: 1rem 2rem;
-            cursor: pointer;
-            border: 2px solid black;
-            font-size: 16px;
-        }
-
-        .print-btn:hover {
-            background: #f8f8f8;
-        }
-
-        @media (max-width: 1000px) {
-            .print-action-block {
-                margin: 0 auto;
-                bottom: 1rem;
-            }
-        }
-
-        @media print {
-
-            @page {
-                size: 7in 9.25in;
-                margin: 27mm 16mm 27mm 16mm;
-            }
-
-            body {
-                visibility: hidden;
-            }
-
-            .page-title {
-                display: none;
-            }
-
-            #print-area {
-                visibility: visible;
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <div id="main" class="global-container">
-        <div class="resume-container cool-shadow">
-            <h1 class="page-title">CV NIKITA RYCHAGOV FULL-STACK WEB DEVELOPER</h1>
-
-            <article class="content" id="print-area" data-print="single" class="page">
-                <section class="title-section section">
-                    <!-- Place image here if you want to -->
-                    <!-- <img width="150px" src="" alt="subject photo" /> -->
-                    <div class="title column">
-                        <span class="name">Nikita Rychagov</span>
-                        <span class="occupation">Full-Stack Developer</span>
-                    </div>
-                </section>
-                <section class="summary-section">
-                    <h2>Summary</h2>
-                    <p class="summary-text">
-                    <p>I'm a Full-Stack Web developer with 4+ years
-                        of experience. I specialize in crafting intuitive and efficient web interfaces, and I am also
-                        competent and confident in working with Node.js and the back-end stack.</p>
-                    <ul class="summary-list">
-                        <li>Knowledge of the most of modern JavaScript
-                            frameworks and their ecosystems</li>
-                        <li>Solid knowledge of HTML and CSS</li>
-                        <li>Good understanding of UI/UX</li>
-                        <li>Client and product-oriented</li>
-                        <li>Team
-                            player and collaborator</li>
-                        <li>Early adopter of efficient approaches
-                            and technologies</li>
-                        <li>Good understanding and experience with
-                            server-side JavaScript(Node.js)</li>
-                        <li>Continuously learning new subjects and improving my skills</li>
-                    </ul>
-                    </p>
-                </section>
-                <section class="contact-section section column">
-                    <h2>Contacts</h2>
-                    <ul class="unstyled-list">
-                        <li>
-                            <span class="li-title">Email:</span>
-                            <a class="li-title" href="mailto:n.o.rychagov@gmail.com">n.o.rychagov@gmail.com</a>
-                        </li>
-                        <li>
-                            <span>Address:</span>
-                            <a href="https://maps.app.goo.gl/fuQ7VNdPqvWMVwCc7" target="_blank">Montenegro</a>
-                        </li>
-                        <li>
-                            <span>Phone:</span>
-                            <a href="tel:+38268526149">+38268526149</a>
-                        </li>
-                    </ul>
-                </section>
-                <section class="experience-section">
-                    <h2>Experience</h2>
-                    <ul class="unstyled-list workplace-list">
-                        <li class="wokplace">
-                            <div class="workplace-header">
-                                <div class="workplace-header-content">
-                                    <span class="workplace-title">Full-Stack Developer</span>
-                                    <span class="workplace-company">Wiregate</span>
-                                    <span class="workplace-address">Podgorica, Montenegro</span>
-                                </div>
-                                <span>Jul 2023 - Present</span>
-                            </div>
-                            <ul class="workplace-description">
-                                <li>
-                                    <p>Worked as Full-stack developer and Teamlead in distributed team in AI startup for
-                                        legal
-                                        document assisted editor.</p>
-
-                                    <ul>
-                                        <li>Team management</li>
-                                        <li>Sprint planning + task mangement</li>
-                                        <li>Onboarding new front-end developer</li>
-                                        <li>Architecture planning</li>
-                                        <li>Frontend development: Typescript, Vuejs + Etherpad integration, also worked
-                                            with
-                                            UI templates</li>
-                                        <li>Backend development: Python, FastAPI, resolving module version conflicts,
-                                            integration of OpenAI, setup DBs etc</li>
-                                    </ul>
-                                    <p><b>Result</b>: The project was ready for demonstration to investors with the most
-                                        of its
-                                        major
-                                        functionalities ready in very tight time range.</p>
-                                </li>
-                                <li>
-                                    <p>Designed and implemented matching engine for crypto-trading startup,
-                                        which includes:</p>
-                                    <ul>
-                                        <li>Commission management(charge, refund, edge cases)</li>
-                                        <li>Order execution queue to distribute work between back-end instances</li>
-                                        <li>Matching algorithm, based on price-time criteria(FIFO), with keeping
-                                            partially
-                                            matched order in order book</li>
-                                        <li> Stack: Typescript, Nestjs, Typeorm, MariaDB, ImmuDB, Redis, Bull</li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <p>Designed and implemented correct average rate computation logic for
-                                        crypto-trading startup, fixed it's visualisation implementation.</p>
-                                    <p>Stack: Typescript,
-                                        Nest.js, Typeorm, Redis, Bull, React + Next.js, GraphQL</p>
-                                </li>
-                                <li>
-                                    <p>Worked on optimisation and refactoring for booking aggregator service</p>
-                                    <p>We faced bad architectural solutions and data design backend-wise(which wasn't be
-                                        possible to negotiate), which lead to massive live-time computations in browser,
-                                        which
-                                        I
-                                        reduced as much as it was possible(by implementing proper Redux storage design)
-                                        along
-                                        with other client side optimisations: reducing rendered DOM nodes count, image
-                                        optimisation, result output pagination etc.</p>
-                                </li>
+                <article class="content" id="print-area" data-print="single"
+                    class="page">
+                    <section class="title-section section">
+                        <!-- Place image here if you want to -->
+                        <!-- <img width="150px" src="" alt="subject photo" /> -->
+                        <div class="title column">
+                            <span class="name">NIKITA RYCHAGOV</span>
+                            <span class="occupation">Full-Stack Developer</span>
+                        </div>
+                    </section>
+                    <section class="summary-section">
+                        <h2>Summary</h2>
+                        <p class="summary-text">
+                            <p>I'm a Full-Stack Web developer with 4+ years
+                                of experience. I specialize in crafting
+                                intuitive and efficient web interfaces, and I am
+                                also
+                                competent and confident in working with Node.js
+                                and the back-end stack.</p>
+                            <ul class="summary-list">
+                                <li>Knowledge of the most of modern JavaScript
+                                    frameworks and their ecosystems</li>
+                                <li>Solid knowledge of HTML and CSS</li>
+                                <li>Good understanding of UI/UX</li>
+                                <li>Client and product-oriented</li>
+                                <li>Team
+                                    player and collaborator</li>
+                                <li>Early adopter of efficient approaches
+                                    and technologies</li>
+                                <li>Good understanding and experience with
+                                    server-side JavaScript(Node.js)</li>
+                                <li>Continuously learning new subjects and
+                                    improving my skills</li>
                             </ul>
-                        </li>
-                        <li class="wokplace">
-                            <div class="workplace-header">
-                                <div class="workplace-header-content">
-                                    <span class="workplace-title">Nodejs Developer</span>
-                                    <span class="workplace-company">Noveo Nord Capital</span>
-                                    <span class="workplace-address">Belgrade, Serbia</span>
+                        </p>
+                    </section>
+                    <section class="contact-section section column">
+                        <h2>Contacts</h2>
+                        <ul class="unstyled-list">
+                            <li>
+                                <span class="li-title">Email:</span>
+                                <a class="li-title"
+                                    href="mailto:n.o.rychagov@gmail.com">n.o.rychagov@gmail.com</a>
+                            </li>
+                            <li>
+                                <span>Address:</span>
+                                <a
+                                    href="https://maps.app.goo.gl/RYYcvg3wRVdJR9MNA"
+                                    target="_blank">Serbia</a>
+                            </li>
+                            <li>
+                                <span>Phone:</span>
+                                <a href="tel:+381629343259">+381629343259</a>
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="experience-section">
+                        <h2>Experience</h2>
+                        <ul class="unstyled-list workplace-list">
+                            <li class="wokplace">
+                                <div class="workplace-header">
+                                    <div class="workplace-header-content">
+                                        <span class="workplace-title">Full-Stack
+                                            Developer</span>
+                                        <span
+                                            class="workplace-company">Wiregate</span>
+                                        <span
+                                            class="workplace-address">Podgorica,
+                                            Montenegro</span>
+                                    </div>
+                                    <span>Jul 2023 - Mar 2024</span>
                                 </div>
-                                <span>Sep 2021 - Mar 2023</span>
-                            </div>
-                            <div class="workplace-description">
-                                <div>
-                                    <p>I used Node.js, Nest.js, and Typescript in various tasks, which included:
+                                <ul class="workplace-description">
+                                    <li>
+                                        <p>Worked as Full-stack developer and
+                                            Teamlead in distributed team in AI
+                                            startup for
+                                            legal
+                                            document assisted editor.</p>
+
+                                        <ul>
+                                            <li>Team management</li>
+                                            <li>Sprint planning + task
+                                                mangement</li>
+                                            <li>Onboarding new front-end
+                                                developer</li>
+                                            <li>Architecture planning</li>
+                                            <li>Frontend development:
+                                                Typescript, Vuejs + Etherpad
+                                                integration, also worked
+                                                with
+                                                UI templates</li>
+                                            <li>Backend development: Python,
+                                                FastAPI, resolving module
+                                                version conflicts,
+                                                integration of OpenAI, setup DBs
+                                                etc</li>
+                                        </ul>
+                                        <p><b>Result</b>: The project was ready
+                                            for demonstration to investors with
+                                            the most
+                                            of its
+                                            major
+                                            functionalities ready in very tight
+                                            time range.</p>
+                                    </li>
+                                    <li>
+                                        <p>Designed and implemented matching
+                                            engine for crypto-trading startup,
+                                            which includes:</p>
+                                        <ul>
+                                            <li>Commission management(charge,
+                                                refund, edge cases)</li>
+                                            <li>Order execution queue to
+                                                distribute work between back-end
+                                                instances</li>
+                                            <li>Matching algorithm, based on
+                                                price-time criteria(FIFO), with
+                                                keeping
+                                                partially
+                                                matched order in order book</li>
+                                            <li> Stack: Typescript, Nestjs,
+                                                Typeorm, MariaDB, ImmuDB, Redis,
+                                                Bull</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <p>Designed and implemented correct
+                                            average rate computation logic for
+                                            crypto-trading startup, fixed it's
+                                            visualisation implementation.</p>
+                                        <p>Stack: Typescript,
+                                            Nest.js, Typeorm, Redis, Bull, React
+                                            + Next.js, GraphQL</p>
+                                    </li>
+                                    <li>
+                                        <p>Worked on optimisation and
+                                            refactoring for booking aggregator
+                                            service</p>
+                                        <p>We faced bad architectural solutions
+                                            and data design backend-wise(which
+                                            wasn't be
+                                            possible to negotiate), which lead
+                                            to massive live-time computations in
+                                            browser,
+                                            which
+                                            I
+                                            reduced as much as it was
+                                            possible(by implementing proper
+                                            Redux storage design)
+                                            along
+                                            with other client side
+                                            optimisations: reducing rendered DOM
+                                            nodes count, image
+                                            optimisation, result output
+                                            pagination etc.</p>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="wokplace">
+                                <div class="workplace-header">
+                                    <div class="workplace-header-content">
+                                        <span class="workplace-title">Nodejs
+                                            Developer</span>
+                                        <span class="workplace-company">Noveo
+                                            Nord Capital</span>
+                                        <span
+                                            class="workplace-address">Belgrade,
+                                            Serbia</span>
+                                    </div>
+                                    <span>Sep 2021 - Mar 2023</span>
+                                </div>
+                                <div class="workplace-description">
+                                    <div>
+                                        <p>I used Node.js, Nest.js, and
+                                            Typescript in various tasks, which
+                                            included:
+                                        </p>
+                                        <ul>
+                                            <li>Supporting and enhancing API
+                                                Gateway microservice with
+                                                GraphQL</li>
+                                            <li>BFF solution for integration
+                                                with Odoo CRM</li>
+                                            <li>Forest Admin integration and
+                                                setup for PostgreSQL, MySQL and
+                                                MongoDB</li>
+                                            <li>Realtime chat implementation
+                                                using WebSocket</li>
+                                            <li>IP country identifier
+                                                microservice</li>
+                                        </ul>
+                                    </div>
+                                    <p>
+                                        During this time I was working in agile
+                                        teams, proposing solutions and
+                                        enhancements,
+                                        learing from my colleagues,
+                                        got experience with
+                                        SequelizeORM(including writing and
+                                        applying migrations),
+                                        microservices, Nest.js framework, Docker
+                                        and various types of databases.
+                                    </p>
+                                </div>
+                            </li>
+                            <li class="wokplace">
+                                <div class="workplace-header">
+                                    <div class="workplace-header-content">
+                                        <span class="workplace-title">Frontend
+                                            Developer</span>
+                                        <span
+                                            class="workplace-company">Devhouse</span>
+                                        <span
+                                            class="workplace-address">Istanbul,
+                                            Turkey</span>
+                                    </div>
+                                    <span>Nov 2019 - Sep 2021</span>
+                                </div>
+                                <div class="workplace-description">
+                                    <p>Most of the time I was supporting
+                                        existing client-side applications(such
+                                        as <a
+                                            href="https://www.cakeiteasy.no/" target="_blank">Cakeiteasy.no</a>),
+                                        designing and implementing
+                                        new ones, but here are some peculiar
+                                        experiences:
                                     </p>
                                     <ul>
-                                        <li>Supporting and enhancing API Gateway microservice with GraphQL</li>
-                                        <li>BFF solution for integration with Odoo CRM</li>
-                                        <li>Forest Admin integration and setup for PostgreSQL, MySQL and MongoDB</li>
-                                        <li>Realtime chat implementation using WebSocket</li>
-                                        <li>IP country identifier microservice</li>
+                                        <li>I worked on rendering
+                                            video-streaming by Websoket from few
+                                            different cameras with sync(for all
+                                            of them)
+                                            "rewind" and "go live" features,
+                                            along with rendering borders by
+                                            incoming
+                                            coordinates which following an
+                                            object in camera view, and along
+                                            with preparing to
+                                            diplay incoming raw event-based
+                                            data, which was a quite thrilling
+                                            journey.
+                                        </li>
+                                        <li>Got my hands on developing custom
+                                            visual solutions using visualization
+                                            libraries
+                                            like D3.js and p5.js, integrating
+                                            them into existing projects. For
+                                            instance, I
+                                            used the former to create an
+                                            animated timescale with customizable
+                                            step and
+                                            range sizes, with color marks for
+                                            time-related events, and connected
+                                            it to a
+                                            stream of incoming video playback
+                                            and associated
+                                            events.</li>
+                                        <li>Also got a back-end experience with
+                                            Node.js, Express and MongoDB while
+                                            implementing
+                                            movie
+                                            search server-side service.</li>
                                     </ul>
                                 </div>
-                                <p>
-                                    During this time I was working in agile teams, proposing solutions and enhancements,
-                                    learing from my colleagues,
-                                    got experience with SequelizeORM(including writing and applying migrations),
-                                    microservices, Nest.js framework, Docker and various types of databases.
-                                </p>
-                            </div>
-                        </li>
-                        <li class="wokplace">
-                            <div class="workplace-header">
-                                <div class="workplace-header-content">
-                                    <span class="workplace-title">Frontend Developer</span>
-                                    <span class="workplace-company">Devhouse</span>
-                                    <span class="workplace-address">Istanbul, Turkey</span>
+                            </li>
+                            <li class="wokplace">
+                                <div class="workplace-header">
+                                    <div class="workplace-header-content">
+                                        <span class="workplace-title">Junior
+                                            Frontend Developer</span>
+                                        <span
+                                            class="workplace-company">TeamLead</span>
+                                        <span
+                                            class="workplace-address">Stavropol,
+                                            Russian Federation</span>
+                                    </div>
+                                    <span>May 2019 - Nov 2019</span>
                                 </div>
-                                <span>Nov 2019 - Sep 2021</span>
-                            </div>
-                            <div class="workplace-description">
-                                <p>Most of the time I was supporting existing client-side applications(such as <a
-                                        href="https://www.cakeiteasy.no/">Cakeiteasy.no</a>),
-                                    designing and implementing
-                                    new ones, but here are some peculiar experiences:
-                                </p>
-                                <ul>
-                                    <li>I worked on rendering video-streaming by Websoket from few different cameras with sync(for all of them)
-                                        "rewind" and "go live" features, along with rendering borders by incoming
-                                        coordinates which following an object in camera view, and along with preparing to
-                                        diplay incoming raw event-based data, which was a quite thrilling journey.
-                                    </li>
-                                    <li>Got my hands on developing custom visual solutions using visualization libraries
-                                        like D3.js and p5.js, integrating them into existing projects. For instance, I
-                                        used the former to create an animated timescale with customizable step and
-                                        range sizes, with color marks for time-related events, and connected it to a
-                                        stream of incoming video playback and associated
-                                        events.</li>
-                                    <li>Also got a back-end experience with Node.js, Express and MongoDB while implementing
-                                        movie
-                                        search server-side service.</li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="wokplace">
-                            <div class="workplace-header">
-                                <div class="workplace-header-content">
-                                    <span class="workplace-title">Junior Frontend Developer</span>
-                                    <span class="workplace-company">TeamLead</span>
-                                    <span class="workplace-address">Stavropol, Russian Federation</span>
+                                <div class="workplace-description">
+                                    <div>
+                                        Table-based admin panel development
+                                        using Angular, Angular Material, HTML &
+                                        SCSS,
+                                        developing new features,
+                                        extending existing, refactoring and
+                                        migrating to newest framework version.
+                                    </div>
                                 </div>
-                                <span>May 2019 - Nov 2019</span>
-                            </div>
-                            <div class="workplace-description">
-                                <div>
-                                    Table-based admin panel development using Angular, Angular Material, HTML & SCSS,
-                                    developing new features,
-                                    extending existing, refactoring and migrating to newest framework version.
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </section>
-                <section class="skills-section">
-                    <h2>Skills</h2>
-                    <ul class="unstyled-list chip-list">
-                        <li class="chip cool-shadow">JavaScript</li>
-                        <li class="chip cool-shadow">TypeScript</li>
+                            </li>
+                        </ul>
+                    </section>
+                    <section class="skills-section">
+                        <h2>Skills</h2>
+                        <ul class="unstyled-list chip-list">
+                            <li class="chip cool-shadow">JavaScript</li>
+                            <li class="chip cool-shadow">TypeScript</li>
 
-                        <li class="chip cool-shadow">React</li>
-                        <li class="chip cool-shadow">Next.js</li>
-                        <li class="chip cool-shadow">Vue.js</li>
-                        <li class="chip cool-shadow">Angular</li>
+                            <li class="chip cool-shadow">React</li>
+                            <li class="chip cool-shadow">Next.js</li>
+                            <li class="chip cool-shadow">Vue.js</li>
+                            <li class="chip cool-shadow">Angular</li>
 
-                        <li class="chip cool-shadow">RxJS</li>
-                        <li class="chip cool-shadow">Redux</li>
-                        <li class="chip cool-shadow">Angular Material</li>
-                        <li class="chip cool-shadow">Bootstrap</li>
+                            <li class="chip cool-shadow">RxJS</li>
+                            <li class="chip cool-shadow">Redux</li>
+                            <li class="chip cool-shadow">Angular Material</li>
+                            <li class="chip cool-shadow">Bootstrap</li>
 
-                        <li class="chip cool-shadow">Node.js</li>
-                        <li class="chip cool-shadow">Express</li>
-                        <li class="chip cool-shadow">Nest.js</li>
+                            <li class="chip cool-shadow">Node.js</li>
+                            <li class="chip cool-shadow">Express</li>
+                            <li class="chip cool-shadow">Nest.js</li>
 
-                        <li class="chip cool-shadow">Git</li>
-                        <li class="chip cool-shadow">Docker</li>
-                        <li class="chip cool-shadow">Redis</li>
+                            <li class="chip cool-shadow">Git</li>
+                            <li class="chip cool-shadow">Docker</li>
+                            <li class="chip cool-shadow">Redis</li>
 
-                        <li class="chip cool-shadow">PostgreSQL</li>
-                        <li class="chip cool-shadow">MySQL</li>
-                        <li class="chip cool-shadow">MongoDB</li>
-                    </ul>
-                </section>
-                <section class="languages">
-                    <h2>Languages</h2>
-                    <ul class="unstyled-list chip-list">
-                        <li class="chip cool-shadow">
-                            <b>Russian</b>: Native
-                        </li>
-                        <li class="chip cool-shadow">
-                            <b>English</b>: ~ B2, technical + conversational
-                        </li>
-                    </ul>
-                </section>
-            </article>
+                            <li class="chip cool-shadow">PostgreSQL</li>
+                            <li class="chip cool-shadow">MySQL</li>
+                            <li class="chip cool-shadow">MongoDB</li>
+                        </ul>
+                    </section>
+                    <section class="languages">
+                        <h2>Languages</h2>
+                        <ul class="unstyled-list chip-list">
+                            <li class="chip cool-shadow">
+                                <b>Russian</b>: Native
+                            </li>
+                            <li class="chip cool-shadow">
+                                <b>English</b>: ~ B2, technical + conversational
+                            </li>
+                        </ul>
+                    </section>
+                </article>
+            </div>
+            <div class="print-action-block">
+                <button id="print"
+                    class="print-btn button cool-shadow">Print!</button>
+            </div>
         </div>
-        <div class="print-action-block">
-            <button id="print" class="print-btn button cool-shadow">Print!</button>
-        </div>
-    </div>
-</body>
+        <script>
+            const move = document.getElementById("move");
+
+            document.body.onpointermove = event => {
+                const { clientX, clientY } = event;
+
+                move.animate({
+                    left: `${clientX - 75}px`,
+                    top: `${clientY - 75}px`
+
+                }, { duration: 1, fill: "both" })
+
+            }
+        </script>
+        <script src="/text-simulation/text-simulation.js"></script>
+    </body>
 </html>
