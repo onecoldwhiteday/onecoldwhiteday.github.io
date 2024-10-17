@@ -12,7 +12,7 @@
   --light-bg: #f5f5f5;
 }
 
-::-moz-selection { /* Code for Firefox */
+::-moz-selection {
   background: #f1f332;
 }
 
