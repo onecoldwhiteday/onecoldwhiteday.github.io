@@ -196,8 +196,8 @@ html {
 
 
 .name {
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  /* font-family: 'Chackra'; */
+  /* font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif; */
+  font-family: 'Chackra';
   font-weight: black;
   font-size: 72px;
   width: fit-content;
