@@ -13,28 +13,25 @@
 }
 
 ::-moz-selection { /* Code for Firefox */
-  /* color: (var(--light-text)); */
   background: #f1f332;
 }
 
 ::selection {
-  /* color: var(--light-text); */
   background: #f1f332;
 }
 
 a {
   display: inline-block;
-  /* background: #91a8ed; */
-  /* color: white; */
-  color: #0d0d0d;
+  text-decoration: underline;
 }
 a:hover {
   text-decoration-style: dashed;
-  /* box-shadow: 0.5rem 0.5rem 0rem #0d0d0d; */
   text-decoration-thickness: 2px;
   transition: 100ms;
   transform: scale(1.02);
 }
+
+
 
 /* Utility classes */
 body,
@@ -153,11 +150,15 @@ html {
 }
 
 .page {
-  font-size: 14px;
+  font-size: 16px;
+  font-family: ven
 }
 
-article {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.content {
+  /* root */
+  font-size: 16px; 
+
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .title-section {
@@ -169,7 +170,8 @@ article {
 
 .summary-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  /* flex-wrap: wrap; */
   gap: 0.5rem 2rem;
 }
 
@@ -183,7 +185,7 @@ article {
 
 .name-container {
   display: flex; 
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   gap: 1rem;
 }
@@ -191,15 +193,17 @@ article {
 
 .name {
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  /* font-family: 'Chackra'; */
   font-weight: black;
-  font-size: 92px;
+  font-size: 72px;
   width: fit-content;
   display: inline;
-  background: #91a8ed;
 }
 
 .occupation {
   font-size: 32px;
+  background: var(--main-bg-color);
+  width: fit-content;
 }
 
 .content {
@@ -208,6 +212,12 @@ article {
   justify-content: space-between;
   background-color: var(--light-bg);
   gap: 0.2rem 0;
+  padding-bottom: 2rem;
+}
+
+.section {
+  padding-bottom: 1rem;
+  /* border-bottom: 2px dashed #0d0d0d; */
 }
 
 .skills-section {
@@ -229,7 +239,7 @@ article {
 .workplace-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
 }
 
 .workplace-header-content {
@@ -239,11 +249,12 @@ article {
 }
 
 .workplace-title {
-  font-size: 24px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .workplace-company {
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .workplace-address {
@@ -253,6 +264,7 @@ article {
 .workplace-description {
   display: flex;
   flex-direction: column;
+  list-style-type: none;
   gap: 1rem;
 }
 
@@ -263,16 +275,9 @@ article {
   top: 4rem;
 }
 
-#wave {
-  position: absolute;
-  height: 70px;
-  width: 600px;
-  background: #e0efe3;
-}
-
 .print-btn {
   z-index: -100;
-  border-radius: 30px;
+  border-radius: 50px;
   background: var(--warn-color);
   padding: 1rem 2rem;
   cursor: pointer;

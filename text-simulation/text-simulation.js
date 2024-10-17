@@ -108,7 +108,7 @@ function draw() {
 function generateParticles() {
 
     for (let i = 0; i < 150; i++) {
-        let letter = random(["React", "CSS", "JavaScript", "Front-End", "TypeScript", "Next.js", "Vue.js", "Angular", "RxJs", "Node.js", "Express", "Next"]);
+        let letter = random(["React", "CSS", "JavaScript", "Front-End", "TypeScript", "Next.js", "Vue.js", "Angular", "RxJs", "Node.js", "Express", "Next", "p5.js"]);
         let bounds = font.textBounds(letter, random(width), random(height), fontSize);
 
         let body = Bodies.rectangle(
