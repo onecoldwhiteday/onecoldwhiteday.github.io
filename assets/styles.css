@@ -168,6 +168,10 @@ html {
   gap: 2rem;
 }
 
+.section h2 {
+  font-family: 'Chackra';
+}
+
 .summary-list {
   display: flex;
   flex-direction: column;
