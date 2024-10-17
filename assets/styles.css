@@ -57,7 +57,7 @@ html {
   overflow-y: hidden;
 }
 
-#move {
+/* #move {
   z-index: 200;
   background: white;
   border: 1px solid #0d0d0d;
@@ -67,15 +67,11 @@ html {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-}
+} */
 
 .column {
   display: flex;
   flex-direction: column;
-}
-
-.section {
-  padding: 1rem 0;
 }
 
 .unstyled-list {

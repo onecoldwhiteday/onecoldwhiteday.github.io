@@ -7,7 +7,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
         <script type="module" defer>
-            document.documentElement.style.cursor = 'none';
+
         const printButton = document.querySelector("#print");
 
         printButton.addEventListener("click", () => {
@@ -18,7 +18,7 @@
     </head>
 
     <body>
-        <div id="move"></div>
+        <!-- <div id="move"></div> -->
         <div id="main" class="global-container">
             <div id="resume-container" class="resume-container cool-shadow">
                 <h1 class="page-title">CV NIKITA RYCHAGOV FULL-STACK WEB
@@ -41,8 +41,7 @@
                             <p>I'm a Frontend developer with 4+ years
                                 of experience. I specialize in crafting
                                 intuitive and efficient web interfaces, and I am
-                                also
-                                competent and confident in working with Node.js
+                                also have some experience with Node.js
                                 and the back-end stack.</p>
                             <ul class="summary-list">
                                 <li>Knowledge of the most of modern JavaScript
@@ -52,8 +51,6 @@
                                 <li>Client and product-oriented</li>
                                 <li>Team
                                     player and collaborator</li>
-                                <li>Early adopter of efficient approaches
-                                    and technologies</li>
                                 <li>Good understanding and experience with
                                     server-side JavaScript(Node.js)</li>
                                 <li>Continuously learning new subjects and
@@ -364,7 +361,9 @@
                     class="print-btn button cool-shadow">print</button>
             </div>
         </div>
-        <script>
+        <!-- <script>
+            document.documentElement.style.cursor = 'none';
+
             const move = document.getElementById("move");
 
             document.body.onpointermove = event => {
@@ -377,7 +376,7 @@
                 }, { duration: 1, fill: "both" })
 
             }
-        </script>
+        </script> -->
         <script src="/text-simulation/text-simulation.js"></script>
     </body>
 </html>
