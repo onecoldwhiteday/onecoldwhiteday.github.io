@@ -25,13 +25,12 @@ function setup() {
     // setup canvas to fill page background
     canvas = createCanvas(windowWidth, windowHeight);
     canvas.position(0, 0);
-    canvas.style('position', 'fixed');
+    // canvas.style('position', 'fixed');
     canvas.style('z-index', '-1');
-    let mouseField = document.getElementById('#main');
+    canvas.id('canvas-words')
+    let mouseField = document.querySelector('body');
 
-    // World.clear(world);
-    // Engine.clear(engine);
-    // Runner.stop(runner);
+
 
     // create an engine
     engine = Engine.create();
@@ -49,6 +48,7 @@ function setup() {
 
     world.gravity.y = .1;
     world.gravity.y = .1;
+    // world.gravity.y = .3;
 
     // Add particles
     generateParticles();
@@ -79,7 +79,7 @@ function setup() {
 }
 
 function draw() {
-    background('#c5c5c5');
+    background('#dcdcdc');
 
     fill('red');
     rect(width / 2, windowHeight, windowWidth, 100);
@@ -107,7 +107,7 @@ function draw() {
 
 function generateParticles() {
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 150; i++) {
         let letter = random(["React", "CSS", "JavaScript", "Front-End", "TypeScript", "Next.js", "Vue.js", "Angular", "RxJs", "Node.js", "Express", "Next"]);
         let bounds = font.textBounds(letter, random(width), random(height), fontSize);
 
@@ -119,8 +119,8 @@ function generateParticles() {
 
         body.restitution = 1;
 
-        let velocity = Matter.Vector.create(0, random(-1, 1))
-        Matter.Body.setVelocity(body, velocity)
+        // let velocity = Matter.Vector.create(0, random(-1, 1))
+        // Matter.Body.setVelocity(body, velocity)
 
         Matter.World.add(engine.world, body);
 

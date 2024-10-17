@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" moznomarginboxes mozdisallowselectionprint>
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
         <script type="module" defer>
+            document.documentElement.style.cursor = 'none';
         const printButton = document.querySelector("#print");
 
         printButton.addEventListener("click", () => {
@@ -29,14 +30,15 @@
                         <!-- Place image here if you want to -->
                         <!-- <img width="150px" src="" alt="subject photo" /> -->
                         <div class="title column">
-                            <span class="name">NIKITA RYCHAGOV</span>
-                            <span class="occupation">Full-Stack Developer</span>
+                            <div class="name-container"><span class="name">NIKITA</span><span class="name"> RYCHAGOV</span>
+                            </div>
+                                <span class="occupation">Front-end Developer</span>
                         </div>
                     </section>
                     <section class="summary-section">
                         <h2>Summary</h2>
                         <p class="summary-text">
-                            <p>I'm a Full-Stack Web developer with 4+ years
+                            <p>I'm a Frontend developer with 4+ years
                                 of experience. I specialize in crafting
                                 intuitive and efficient web interfaces, and I am
                                 also
@@ -61,20 +63,20 @@
                     </section>
                     <section class="contact-section section column">
                         <h2>Contacts</h2>
-                        <ul class="unstyled-list">
+                        <ul class="unstyled-list vertical-list">
                             <li>
                                 <span class="li-title">Email:</span>
                                 <a class="li-title"
                                     href="mailto:n.o.rychagov@gmail.com">n.o.rychagov@gmail.com</a>
                             </li>
                             <li>
-                                <span>Address:</span>
+                                <span class="li-title">Address:</span>
                                 <a
                                     href="https://maps.app.goo.gl/RYYcvg3wRVdJR9MNA"
                                     target="_blank">Serbia</a>
                             </li>
                             <li>
-                                <span>Phone:</span>
+                                <span class="li-title">Phone:</span>
                                 <a href="tel:+381629343259">+381629343259</a>
                             </li>
                         </ul>
@@ -359,7 +361,7 @@
             </div>
             <div class="print-action-block">
                 <button id="print"
-                    class="print-btn button cool-shadow">Print!</button>
+                    class="print-btn button cool-shadow">print</button>
             </div>
         </div>
         <script>
@@ -369,8 +371,8 @@
                 const { clientX, clientY } = event;
 
                 move.animate({
-                    left: `${clientX - 75}px`,
-                    top: `${clientY - 75}px`
+                    left: `${clientX - 20}px`,
+                    top: `${clientY - 20}px`
 
                 }, { duration: 1, fill: "both" })
 
