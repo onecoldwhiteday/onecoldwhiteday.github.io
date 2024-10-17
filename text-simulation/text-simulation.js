@@ -64,9 +64,8 @@ function setup() {
     ground = Bodies.rectangle(width / 2, height, windowWidth, 10, { isStatic: true });
     World.add(world, ground);
 
-    stroke(255);
-    top = Bodies.rectangle(width / 2, windowHeight, windowWidth, 10, { isStatic: true });
-    World.add(world, top);
+    topWall = Bodies.rectangle(0, windowHeight - height - 5, windowWidth + width, 10, { isStatic: true });
+    World.add(world, topWall);
 
     leftWall = Bodies.rectangle(0, height / 2, 10, windowHeight, { isStatic: true });
     World.add(world, leftWall);
@@ -80,11 +79,6 @@ function setup() {
 
 function draw() {
     background('#dcdcdc');
-
-    fill('red');
-    rect(width / 2, windowHeight, windowWidth, 100);
-
-
 
     textSize(fontSize);
     textFont(font);
